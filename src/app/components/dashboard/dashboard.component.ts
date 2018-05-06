@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Employee } from "../../models/employee";
+import { Work } from "../../models/work";
 
 @Component({
   selector: 'app-dashboard',
@@ -7,7 +8,9 @@ import { Employee } from "../../models/employee";
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  employees: Employee[]
+  employees: Employee[];
+  active: Work[];
+  // worked: work[];
   constructor() { }
 
   ngOnInit() {
@@ -29,6 +32,25 @@ export class DashboardComponent implements OnInit {
         salary: 8000
       }
     ];
+
+    this.active = [];
+  } //ngOnInit
+
+  setActive(e, employee){
+    e.preventDefault();
+    e.target.classList.add("disabled")
+    this.active.push({
+      employee: employee,
+      status: "working",
+      date: new Date(),
+      startTime: new Date,
+      endTime: new Date()
+    });
+  }
+  
+  done(e, employee){
+    e.preventDefault();
+    employee.endTime = new Date();
   }
 
 }
