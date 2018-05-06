@@ -8,6 +8,8 @@ import { LoginComponent } from './components/login/login.component';
 import { AddEmployeeComponent } from './components/add-employee/add-employee.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { EmployeeService } from './services/employee.service';
+import { WorkService } from './services/work.service';
 
 const appRoutes: Routes = [
   {path: 'dashboard', component: DashboardComponent},
@@ -28,7 +30,7 @@ const appRoutes: Routes = [
     BrowserModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [],
+  providers: [EmployeeService, WorkService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

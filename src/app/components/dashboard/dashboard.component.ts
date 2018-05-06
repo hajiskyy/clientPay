@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Employee } from "../../models/employee";
 import { Work } from "../../models/work";
+import { EmployeeService } from "../../services/employee.service";
+import { WorkService } from "../../services/work.service";
 
 @Component({
   selector: 'app-dashboard',
@@ -10,36 +12,20 @@ import { Work } from "../../models/work";
 export class DashboardComponent implements OnInit {
   employees: Employee[];
   active: Work[];
-  // worked: work[];
-  constructor() { }
+  constructor(
+    private employeeService: EmployeeService,
+    private workService: WorkService
+  ) { }
 
   ngOnInit() {
-    this.employees = [
-      {
-        id: "001",
-        FirstName: "Haji",
-        LastName: "Mohammed",
-        department: "IT",
-        role: "lead",
-        salary: 5000
-      },
-      {
-        id: "002",
-        FirstName: "Kamal",
-        LastName: "Umar",
-        department: "Animation",
-        role: "senior",
-        salary: 8000
-      }
-    ];
-
-    this.active = [];
-  } //ngOnInit
+    this.employees = this.employeeService.getEmployees()
+    this.active = this.workService.getActives()
+  }
 
   setActive(e, employee){
     e.preventDefault();
-    e.target.classList.add("disabled")
-    this.active.push({
+    e.target.classList.add("disabled");
+    this.workService.setActive({
       employee: employee,
       status: "working",
       date: new Date(),
@@ -47,10 +33,10 @@ export class DashboardComponent implements OnInit {
       endTime: new Date()
     });
   }
-  
+
   done(e, employee){
     e.preventDefault();
-    employee.endTime = new Date();
+    this.workService.setActive(employee);
   }
 
 }
