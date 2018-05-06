@@ -1,11 +1,34 @@
-<nav>
-  <div class="nav-wrapper blue lighten-2">
-    <a href="#" class="brand-logo">Client Pay</a>
-    <ul id="nav-mobile" class="right hide-on-med-and-down">
-      <li><a href="sass.html">Sass</a></li>
-      <li><a href="badges.html">Components</a></li>
-      <li><a href="collapsible.html">JavaScript</a></li>
-    </ul>
-  </div>
-</nav>
-
+<div class="navbar-fixed">
+  <nav class="blue">
+    <div class="container">
+      <div class="nav-wrapper">
+        <a href="#" class="brand-logo">Client Pay</a>
+        <a  data-target="mobile-nav" class="sidenav-trigger">
+          <i class="material-icons">menu</i>
+        </a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li>
+            <a href="#">Dashboard</a>
+          </li>
+          <li>
+            <a href="#">Employees</a>
+          </li>
+          <li>
+            <a href="#">Log out</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>
+<ul class="sidenav" id="mobile-nav">
+    <li>
+      <a href="#">Dashboard</a>
+    </li>
+    <li>
+      <a href="#">Employees</a>
+    </li>
+    <li>
+      <a href="#">Log out</a>
+    </li>
+  </ul>

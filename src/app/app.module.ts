@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { RouterModule, Routes, Router } from "@angular/router";
 
 
 import { AppComponent } from './app.component';
@@ -8,6 +9,12 @@ import { AddEmployeeComponent } from './components/add-employee/add-employee.com
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 
+const appRoutes: Routes = [
+  {path: 'dashboard', component: DashboardComponent},
+  {path: 'add', component: AddEmployeeComponent },
+  {path:'', redirectTo:'/dashboard', pathMatch: 'full'},
+  {path: '**', redirectTo:'/dashboard'}
+];
 
 @NgModule({
   declarations: [
@@ -18,7 +25,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     NavbarComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    RouterModule.forRoot(appRoutes)
   ],
   providers: [],
   bootstrap: [AppComponent]
