@@ -11,9 +11,11 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { EmployeeService } from './services/employee.service';
 import { WorkService } from './services/work.service';
+import { EmployeesComponent } from './components/employees/employees.component';
 
 const appRoutes: Routes = [
   {path: 'dashboard', component: DashboardComponent},
+  {path: 'employees', component: EmployeesComponent},
   {path: 'add', component: AddEmployeeComponent },
   {path:'', redirectTo:'/dashboard', pathMatch: 'full'},
   {path: '**', redirectTo:'/dashboard'}
@@ -25,7 +27,8 @@ const appRoutes: Routes = [
     LoginComponent,
     AddEmployeeComponent,
     DashboardComponent,
-    NavbarComponent
+    NavbarComponent,
+    EmployeesComponent
   ],
   imports: [
     BrowserModule,

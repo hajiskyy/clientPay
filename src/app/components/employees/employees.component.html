@@ -1,0 +1,44 @@
+<div class="container">
+  <div class="row">
+    <div class="col s12">
+      <div class="card">
+        <div class="card-content" *ngIf="loaded">
+          <span *ngIf="employees === null || employees.length === 0" class="card-title">No employees yet</span>
+          <ul class="collection with-header" *ngIf="employees.length > 0">
+            <li class="collection-header">
+              <h4>Employees</h4>
+            </li>
+            <li class="collection-item" *ngFor="let employee of employees">
+              <div class="chip">{{employee.department}}</div>{{employee.FirstName}} {{employee.LastName}}
+              <span class="secondary-content">
+                <a href="#">
+                  <i class="material-icons">info</i>
+                </a>
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div *ngIf="!loaded" class="container">
+          <div class="preloader-wrapper active">
+            <div class="spinner-layer spinner-blue-only">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div>
+              <div class="gap-patch">
+                <div class="circle"></div>
+              </div>
+              <div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="fixed-action-btn">
+    <a class="btn-floating btn-large waves-effect waves-light green pulse">
+      <i class="material-icons">add</i>
+    </a>
+  </div>
+</div>
