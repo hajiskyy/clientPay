@@ -1,36 +1,23 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from "@angular/common/http";
+import {Observable} from 'rxjs';
 import { Employee } from "../models/employee";
+
 
 @Injectable()
 export class EmployeeService {
-  employees: Employee[];
-  constructor() { 
-    this.employees = [
-      {
-        id: "001",
-        FirstName: "Haji",
-        LastName: "Mohammed",
-        department: "IT",
-        role: "lead",
-        salary: 5000
-      },
-      {
-        id: "002",
-        FirstName: "Kamal",
-        LastName: "Umar",
-        department: "Animation",
-        role: "senior",
-        salary: 8000
-      }
-    ];
+  constructor(
+    private http: HttpClient
+  ) { 
+    
   }
 
-  getEmployees(){
-    return this.employees
+  getEmployees(): Observable<Employee[]>{
+    return this.http.get<Employee[]>("http://localhost:3000/employees");
   }
 
-  addEmployee(employee: Employee){
-    this.employees.push(employee);
-  }
+  // addEmployee(employee: Employee){
+  //   this.employees.push(employee);
+  // }
 
 }
