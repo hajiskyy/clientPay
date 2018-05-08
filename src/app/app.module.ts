@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes, Router } from "@angular/router";
 import { HttpClientModule } from "@angular/common/http";
+import { FormsModule } from "@angular/forms";
 
 
 import { AppComponent } from './app.component';
@@ -12,9 +13,11 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { EmployeeService } from './services/employee.service';
 import { WorkService } from './services/work.service';
 import { EmployeesComponent } from './components/employees/employees.component';
+import { ViewEmployeeComponent } from './components/view-employee/view-employee.component';
 
 const appRoutes: Routes = [
   {path: 'dashboard', component: DashboardComponent},
+  {path: 'employee/:id', component: ViewEmployeeComponent},
   {path: 'employees', component: EmployeesComponent},
   {path: 'add', component: AddEmployeeComponent },
   {path:'', redirectTo:'/dashboard', pathMatch: 'full'},
@@ -28,11 +31,13 @@ const appRoutes: Routes = [
     AddEmployeeComponent,
     DashboardComponent,
     NavbarComponent,
-    EmployeesComponent
+    EmployeesComponent,
+    ViewEmployeeComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
+    FormsModule,
     RouterModule.forRoot(appRoutes)
   ],
   providers: [EmployeeService, WorkService],

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-// import * as M from '../../../../node_modules/materialize-css/dist/js/materialize';
+import * as M from "materialize-css/dist/js/materialize";
 
 @Component({
   selector: 'app-navbar',
@@ -11,7 +11,7 @@ export class NavbarComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-
-
+    const sideNav = document.querySelector('.sidenav');
+    M.Sidenav.init(sideNav,{});
   }
 }

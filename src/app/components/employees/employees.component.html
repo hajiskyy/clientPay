@@ -11,13 +11,14 @@
             <li class="collection-item" *ngFor="let employee of employees">
               <div class="chip">{{employee.department}}</div>{{employee.FirstName}} {{employee.LastName}}
               <span class="secondary-content">
-                <a href="#">
+                <a routerLink="/employee/{{employee.id}}">
                   <i class="material-icons">info</i>
                 </a>
               </span>
             </li>
           </ul>
         </div>
+
         <div *ngIf="!loaded" class="container">
           <div class="preloader-wrapper active">
             <div class="spinner-layer spinner-blue-only">
@@ -34,10 +35,11 @@
           </div>
         </div>
       </div>
+      <a routerLink="/dashboard" class="btn btn-large yellow darken-3">dashboard</a>
     </div>
   </div>
   <div class="fixed-action-btn">
-    <a class="btn-floating btn-large waves-effect waves-light green pulse">
+    <a routerLink="/add" class="btn-floating btn-large waves-effect waves-light green pulse">
       <i class="material-icons">add</i>
     </a>
   </div>
