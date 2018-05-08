@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from "@angular/router";
+import { EmployeeService } from "../../services/employee.service";
+import { Employee } from "../../models/employee";
 import * as M from "materialize-css/dist/js/materialize";
 
 @Component({
@@ -12,9 +15,15 @@ export class AddEmployeeComponent implements OnInit {
   department: string;
   role: string;
   salary: number;
-  constructor() { }
+  employee: Employee;
+  loaded: boolean;
+  constructor(
+    private employeeService: EmployeeService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
+    this.loaded = true;
   }
 
   //to validate names
@@ -22,7 +31,7 @@ export class AddEmployeeComponent implements OnInit {
     let ex = /^[^0-9\\\/&]*$/;
     if (name != null) {
       if (name.match(ex) && (name.length >= 2 && name.length <= 30)) {
-        return true
+        return true;
       }
     }
     return false;
@@ -53,7 +62,23 @@ export class AddEmployeeComponent implements OnInit {
           if (this.otherValidate(this.department)) {
             if (this.otherValidate(this.role)) {
               if (this.salary != null) {
-                console.log('great');
+                //start loader
+                this.loaded = false;
+                // set employee
+                this.employee= {
+                  id: "004",
+                  FirstName: this.FirstName,
+                  LastName: this.LastName,
+                  department: this.department,
+                  role: this.role,
+                  salary: this.salary
+                }
+                this.employeeService.addEmployee(this.employee).subscribe(employee => {
+                  this.loaded = true;
+                  if(employee.id){
+                    this.router.navigate(['/employees']);
+                  }
+                })
               } else {
                 let toastHTML = '<span>Check Salary</span>';
                 M.toast({ html: toastHTML, displayLength: 2000 });

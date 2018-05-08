@@ -16,8 +16,8 @@ export class EmployeeService {
     return this.http.get<Employee[]>("http://localhost:3000/employees");
   }
 
-  // addEmployee(employee: Employee){
-  //   this.employees.push(employee);
-  // }
+  addEmployee(employee: Employee){
+    return this.http.post<Employee>("http://localhost:3000/employees",employee);
+  }
 
 }

@@ -12,6 +12,9 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit() {
     const sideNav = document.querySelector('.sidenav');
-    M.Sidenav.init(sideNav,{});
+    M.Sidenav.init(sideNav, {});
+    // let instance = M.Sidenav.getInstance(sideNav);
+    // instance.close();
+
   }
 }
