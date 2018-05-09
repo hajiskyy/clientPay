@@ -1,3 +1,31 @@
-<p>
-  view-employee works!
-</p>
+<div class="container">
+  <div class="row">
+    <div class="col s12">
+      <div class="card">
+        <div *ngIf="loaded">
+          <div class="card-content">
+            <h5 class="card-title center-align">{{employee.FirstName}} {{employee.LastName}}</h5>
+            <ul class="collection">
+              <li class="collection-item">Department:
+                <strong class="secondary-content">{{employee.department}}</strong></li>
+              <li class="collection-item">Role:
+                  <strong class="secondary-content">{{employee.role}}</strong> </li>
+              <li class="collection-item">Salary:
+                  <strong class="secondary-content">{{employee.salary | currency}}</strong>
+                </li>
+              <li class="collection-item">Hours Worked this month: <strong>{{hoursThisMonth}} h</strong> <span class="secondary-content">Due: <strong>{{dueMonth | currency}}</strong></span>  </li>
+              <li class="collection-item">
+                Hours Worked this year: <strong>{{hoursPerYear}} h</strong> <span class="secondary-content">Due: <strong>{{dueYear | currency}}</strong></span>
+              </li>
+              <li class="collection-item">
+                All time: <strong>{{allTimeHours}} h</strong><span class="secondary-content">Due: <strong>{{dueAllTime | currency}}</strong></span>
+              </li>
+            </ul>
+            <a class="btn waves-effect red">delete</a>
+            <a class="btn yellow darken-3 waves-effect">Edit</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
