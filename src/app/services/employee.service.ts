@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
+import { AngularFirestore, AngularFirestoreCollection } from "angularfire2/firestore";
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { of } from "rxjs/Observable/of";
 import {Observable} from 'rxjs';
@@ -21,7 +22,8 @@ export class EmployeeService {
   selectedEmployee = this.employeeSource.asObservable();
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private db: AngularFirestore
   ) { 
     
   }
@@ -40,6 +42,9 @@ export class EmployeeService {
 
   updateEmployee(employee: Employee){
     return this.http.put<Employee>(`http://localhost:3000/employees/${employee.id}`,employee);
+  }
+  deleteEmployee(employee: Employee){
+    return this.http.delete<Employee>(`http://localhost:3000/employees/${employee.id}`);
   }
 
   setFormEmployee(employee: Employee) {

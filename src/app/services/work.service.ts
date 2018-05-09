@@ -44,4 +44,12 @@ export class WorkService {
     return this.http.post<Hours>("http://localhost:3000/worked_hours",newHoursWorked);
   }
 
+  getWorkLogs(id: string){
+    return this.http.get<Hours[]>(`http://localhost:3000/worked_hours?employee=${id}`);
+  }
+
+  deleteWorkLog(id: string){
+    return this.http.delete<Hours[]>(`http://localhost:3000/worked_hours?employee=${id}`);
+  }
+
 }

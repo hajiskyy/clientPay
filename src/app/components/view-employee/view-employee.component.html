@@ -13,15 +13,15 @@
               <li class="collection-item">Salary:
                   <strong class="secondary-content">{{employee.salary | currency}}</strong>
                 </li>
-              <li class="collection-item">Hours Worked this month: <strong>{{hoursThisMonth}} h</strong> <span class="secondary-content">Due: <strong>{{dueMonth | currency}}</strong></span>  </li>
+              <li class="collection-item">This month: <strong>{{hoursThisMonth}} h</strong> <span class="secondary-content">Due: <strong>{{dueMonth | currency}}</strong></span>  </li>
               <li class="collection-item">
-                Hours Worked this year: <strong>{{hoursPerYear}} h</strong> <span class="secondary-content">Due: <strong>{{dueYear | currency}}</strong></span>
+                This year: <strong>{{hoursThisYear}} h</strong> <span class="secondary-content">Due: <strong>{{dueYear | currency}}</strong></span>
               </li>
               <li class="collection-item">
                 All time: <strong>{{allTimeHours}} h</strong><span class="secondary-content">Due: <strong>{{dueAllTime | currency}}</strong></span>
               </li>
             </ul>
-            <a class="btn waves-effect red"><i class="material-icons left">delete</i>  delete</a>
+            <a (click)="onDelete(employee)" class="btn waves-effect red"><i class="material-icons left">delete</i>  delete</a>
             <a (click)="onEdit(employee)" class="btn yellow darken-3 waves-effect"><i class="material-icons left">edit</i> Edit</a>
           </div>
         </div>
