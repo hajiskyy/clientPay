@@ -15,8 +15,10 @@ export class AddEmployeeComponent implements OnInit {
   department: string;
   role: string;
   salary: number;
+  id: string;
   employee: Employee;
   loaded: boolean;
+  isNew: boolean;
   constructor(
     private employeeService: EmployeeService,
     private router: Router
@@ -24,6 +26,20 @@ export class AddEmployeeComponent implements OnInit {
 
   ngOnInit() {
     this.loaded = true;
+    this.isNew = true
+    //subscribe to the selected employee Observable
+    this.employeeService.selectedEmployee.subscribe(employee => {
+      if (employee.id !== null) {
+        this.id = employee.id;
+        this.isNew = false;
+        this.FirstName = employee.FirstName;
+        this.LastName = employee.LastName;
+        this.department = employee.department;
+        this.role = employee.role;
+        this.salary = employee.salary;
+
+      }
+    })
   }
 
   //to validate names
@@ -64,21 +80,40 @@ export class AddEmployeeComponent implements OnInit {
               if (this.salary != null) {
                 //start loader
                 this.loaded = false;
-                // set employee
-                this.employee= {
-                  id: "004",
-                  FirstName: this.FirstName,
-                  LastName: this.LastName,
-                  department: this.department,
-                  role: this.role,
-                  salary: this.salary
-                }
-                this.employeeService.addEmployee(this.employee).subscribe(employee => {
-                  this.loaded = true;
-                  if(employee.id){
-                    this.router.navigate(['/employees']);
+                if (this.isNew) {
+                  // set employee
+                  this.employee = {
+                    id: "004",
+                    FirstName: this.FirstName,
+                    LastName: this.LastName,
+                    department: this.department,
+                    role: this.role,
+                    salary: this.salary
                   }
-                })
+                  this.employeeService.addEmployee(this.employee).subscribe(employee => {
+                    this.loaded = true;
+                    if (employee.id) {
+                      this.router.navigate(['/employees']);
+                    }
+                  });
+                } else {
+                  // set employee
+                  this.employee = {
+                    id: this.id,
+                    FirstName: this.FirstName,
+                    LastName: this.LastName,
+                    department: this.department,
+                    role: this.role,
+                    salary: this.salary
+                  }
+                  this.employeeService.updateEmployee(this.employee).subscribe(employee => {
+                    this.loaded = true;
+                    if (employee.id) {
+                      this.router.navigate([`/employee/${employee.id}`]);
+                    }
+                  });
+                }
+
               } else {
                 let toastHTML = '<span>Check Salary</span>';
                 M.toast({ html: toastHTML, displayLength: 2000 });

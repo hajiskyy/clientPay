@@ -21,8 +21,8 @@
                 All time: <strong>{{allTimeHours}} h</strong><span class="secondary-content">Due: <strong>{{dueAllTime | currency}}</strong></span>
               </li>
             </ul>
-            <a class="btn waves-effect red">delete</a>
-            <a class="btn yellow darken-3 waves-effect">Edit</a>
+            <a class="btn waves-effect red"><i class="material-icons left">delete</i>  delete</a>
+            <a (click)="onEdit(employee)" class="btn yellow darken-3 waves-effect"><i class="material-icons left">edit</i> Edit</a>
           </div>
         </div>
       </div>

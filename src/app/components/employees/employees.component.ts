@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import * as M from "materialize-css/dist/js/materialize";
 import { EmployeeService } from "../../services/employee.service";
 import { Employee } from "../../models/employee";
 
@@ -20,6 +21,10 @@ export class EmployeesComponent implements OnInit {
       this.employees = employees;
       this.loaded = true;
     })
+  }
+  onHover(){
+    let elems = document.querySelectorAll('.tooltipped');
+    M.Tooltip.init(elems, {});
   }
 
 }

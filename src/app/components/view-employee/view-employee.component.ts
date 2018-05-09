@@ -45,4 +45,9 @@ export class ViewEmployeeComponent implements OnInit {
     })
   }
 
+  onEdit(employee: Employee){
+   this.employeeService.setFormEmployee(employee);
+   this.router.navigate(["/add"]);
+  }
+
 }
