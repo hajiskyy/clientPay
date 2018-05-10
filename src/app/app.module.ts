@@ -39,7 +39,7 @@ const appRoutes: Routes = [
   ],
   imports: [
     BrowserModule,
-    AngularFireModule.initializeApp(environment.firebase, 'clientPay'),
+    AngularFireModule.initializeApp(environment.firebaseApp, 'clientPay'),
     AngularFirestoreModule,
     HttpClientModule,
     FormsModule,

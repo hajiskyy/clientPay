@@ -5,7 +5,7 @@
 
 export const environment = {
   production: false,
-  firebase: {
+  firebaseApp: {
     apiKey: "AIzaSyDIc6gHgYMTnJ_ISOvTcfJVFMibi8FHrBE",
     authDomain: "clientpanel-d9885.firebaseapp.com",
     databaseURL: "https://clientpanel-d9885.firebaseio.com",

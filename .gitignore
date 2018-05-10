@@ -8,8 +8,6 @@
 
 # dependencies
 /node_modules
-environments/
-package-lock.json
 
 # IDEs and editors
 /.idea
@@ -44,3 +42,5 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+src/environments/environment.ts
+package-lock.json
