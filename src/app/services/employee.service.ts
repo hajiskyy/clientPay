@@ -10,9 +10,10 @@ import { Employee } from "../models/employee";
 
 @Injectable()
 export class EmployeeService {
-  employees: Observable<any[]>;
-  employeeCollection: AngularFirestoreCollection<Employee>
-  snapshot: any;
+  employees: Observable<Employee[]>;
+  employee: Observable<Employee>
+  employeeCollection: AngularFirestoreCollection<Employee>;
+  employeeDocument: AngularFirestoreDocument<Employee>
 
   private employeeSource = new BehaviorSubject<Employee>({
     id: null,
@@ -28,30 +29,44 @@ export class EmployeeService {
     private http: HttpClient,
     public db: AngularFirestore
   ) { 
-    db.firestore.settings({ timestampsInSnapshots: true });
-    this.employeeCollection = this.db.collection('employee');
-   this.employees = this.employeeCollection.valueChanges();
+    
+    this.employeeCollection = this.db.collection('employee', ref => ref.orderBy('salary', 'desc'));
+   this.employees = this.employeeCollection.snapshotChanges().map(changes => {
+     return changes.map(a => {
+       const data = a.payload.doc.data() as Employee;
+       data.id = a.payload.doc.id;
+       return data;
+     });
+   });
 }
 
   getEmployees(){
     return this.employees;
   }
 
-  getEmployeeById(id: string): Observable<Employee>{
-    return this.http.get<Employee>(`http://localhost:3000/employees/${id}`);
+  getEmployeeById(id: string){
+    this.employeeDocument = this.db.doc<Employee>(`employee/${id}`);
+    this.employee = this.employeeDocument.snapshotChanges().map(changes => {
+      
+      let data = changes.payload.data() as Employee;
+       data.id = changes.payload.id;
+       return data;
+    })
+     return this.employee;
   }
 
   addEmployee(employee: Employee){
-    let id = this.db.createId()
-    employee.id = id;
      this.employeeCollection.add(employee);
   }
 
   updateEmployee(employee: Employee){
-    return this.http.put<Employee>(`http://localhost:3000/employees/${employee.id}`,employee);
+    this.employeeDocument = this.db.doc(`employee/${employee.id}`);
+    this.employeeDocument.update(employee);
   }
-  deleteEmployee(employee: Employee){
-    return this.http.delete<Employee>(`http://localhost:3000/employees/${employee.id}`);
+
+  deleteEmployee(id: string){
+    this.employeeDocument = this.db.doc(`employee/${id}`);
+    this.employeeDocument.delete();
   }
 
   setFormEmployee(employee: Employee) {

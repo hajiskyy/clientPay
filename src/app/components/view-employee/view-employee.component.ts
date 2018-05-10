@@ -47,24 +47,27 @@ export class ViewEmployeeComponent implements OnInit {
           this.dueYear = this.hoursThisYear * salary;
           this.dueAllTime = this.allTimeHours * salary;
           this.loaded = true;
-        })
-      })
-    })
+        });
+      });
+    });
   }
 
-  onEdit(employee: Employee) {
-    this.employeeService.setFormEmployee(employee);
+  onEdit() {
+    this.employeeService.setFormEmployee(this.employee);
     this.router.navigate(["/add"]);
   }
 
-  onDelete(employee: Employee) {
-    // this.employeeService.deleteEmployee(employee).subscribe(employee => {
-    //   this.workService.deleteWorkLog(this.employee.id).subscribe(res => {
-    //     let toastHTML = '<span>Employee deleted</span>';
-    //     M.toast({ html: toastHTML, displayLength: 2000 });
-    //     this.router.navigate(['/employees']);
-    //   });
-      
+  onDelete() {
+    this.employeeService.deleteEmployee(this.employee.id);
+    let toastHTML = '<span>Employee deleted</span>';
+    M.toast({ html: toastHTML, displayLength: 2000 });
+    window.location.replace("http://localhost:4200/employees");
+    
+    // this.router.navigate(['/employees']);
+    // this.workService.deleteWorkLog(this.employee.id).subscribe(res => {
+    //   let toastHTML = '<span>Employee deleted</span>';
+    //   M.toast({ html: toastHTML, displayLength: 2000 });
+    //   this.router.navigate(['/employees']);
     // });
   }
 
@@ -103,7 +106,7 @@ export class ViewEmployeeComponent implements OnInit {
       }
     });
 
-    this.hoursThisYear= sum;
+    this.hoursThisYear = sum;
   }
 
   getHoursAllTime(worked_hours: Hours[]) {
