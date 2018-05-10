@@ -83,19 +83,15 @@ export class AddEmployeeComponent implements OnInit {
                 if (this.isNew) {
                   // set employee
                   this.employee = {
-                    id: "004",
                     FirstName: this.FirstName,
                     LastName: this.LastName,
                     department: this.department,
                     role: this.role,
                     salary: this.salary
                   }
-                  this.employeeService.addEmployee(this.employee).subscribe(employee => {
-                    this.loaded = true;
-                    if (employee.id) {
-                      this.router.navigate(['/employees']);
-                    }
-                  });
+                  this.employeeService.addEmployee(this.employee);
+                  this.loaded = true;
+                  this.router.navigate(['/employees']);
                 } else {
                   // set employee
                   this.employee = {

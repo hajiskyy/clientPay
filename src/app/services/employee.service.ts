@@ -1,15 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
-import { AngularFirestore, AngularFirestoreCollection } from "angularfire2/firestore";
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from "angularfire2/firestore";
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { of } from "rxjs/Observable/of";
 import {Observable} from 'rxjs';
+import 'rxjs/add/operator/map';
 import { Employee } from "../models/employee";
 
 
 @Injectable()
 export class EmployeeService {
-  employee: Employee;
+  employees: Observable<any[]>;
+  employeeCollection: AngularFirestoreCollection<Employee>
+  snapshot: any;
 
   private employeeSource = new BehaviorSubject<Employee>({
     id: null,
@@ -23,13 +26,15 @@ export class EmployeeService {
 
   constructor(
     private http: HttpClient,
-    private db: AngularFirestore
+    public db: AngularFirestore
   ) { 
-    
-  }
+    db.firestore.settings({ timestampsInSnapshots: true });
+    this.employeeCollection = this.db.collection('employee');
+   this.employees = this.employeeCollection.valueChanges();
+}
 
-  getEmployees(): Observable<Employee[]>{
-    return this.http.get<Employee[]>("http://localhost:3000/employees");
+  getEmployees(){
+    return this.employees;
   }
 
   getEmployeeById(id: string): Observable<Employee>{
@@ -37,7 +42,9 @@ export class EmployeeService {
   }
 
   addEmployee(employee: Employee){
-    return this.http.post<Employee>("http://localhost:3000/employees",employee);
+    let id = this.db.createId()
+    employee.id = id;
+     this.employeeCollection.add(employee);
   }
 
   updateEmployee(employee: Employee){
