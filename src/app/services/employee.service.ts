@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from "angularfire2/firestore";
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { of } from "rxjs/Observable/of";
@@ -27,7 +26,6 @@ export class EmployeeService {
   selectedEmployee = this.employeeSource.asObservable();
 
   constructor(
-    private http: HttpClient,
     public db: AngularFirestore,
     private workService: WorkService
   ) { 
