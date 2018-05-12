@@ -6,6 +6,7 @@ import { of } from "rxjs/Observable/of";
 import {Observable} from 'rxjs';
 import 'rxjs/add/operator/map';
 import { Employee } from "../models/employee";
+import { WorkService } from "./work.service";
 
 
 @Injectable()
@@ -27,20 +28,21 @@ export class EmployeeService {
 
   constructor(
     private http: HttpClient,
-    public db: AngularFirestore
+    public db: AngularFirestore,
+    private workService: WorkService
   ) { 
-    
-    this.employeeCollection = this.db.collection('employee', ref => ref.orderBy('salary', 'desc'));
-   this.employees = this.employeeCollection.snapshotChanges().map(changes => {
-     return changes.map(a => {
-       const data = a.payload.doc.data() as Employee;
-       data.id = a.payload.doc.id;
-       return data;
-     });
-   });
+    // this.employeeCollection = this.db.collection('employee');
 }
 
   getEmployees(){
+    this.employeeCollection = this.db.collection('employee', ref => ref.orderBy('salary', 'desc'));
+    this.employees = this.employeeCollection.snapshotChanges().map(changes => {
+      return changes.map(a => {
+        const data = a.payload.doc.data() as Employee;
+        data.id = a.payload.doc.id;
+        return data;
+      });
+    });
     return this.employees;
   }
 
@@ -56,6 +58,8 @@ export class EmployeeService {
   }
 
   addEmployee(employee: Employee){
+    this.workService.addInactive(employee);
+    this.employeeCollection = this.db.collection('employee');
      this.employeeCollection.add(employee);
   }
 

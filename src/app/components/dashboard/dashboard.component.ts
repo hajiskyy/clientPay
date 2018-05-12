@@ -11,7 +11,7 @@ import { WorkService } from "../../services/work.service";
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  employees: Employee[];
+  inactiveEmployees: Employee[];
   active: Work[];
   loaded: boolean;
   constructor(
@@ -29,39 +29,43 @@ export class DashboardComponent implements OnInit {
   //init get employees
   getEmployeesInit() {
     this.employeeService.getEmployees().subscribe(employees => {
-      this.employees = employees;
+      // check in inactive already exists
+      if(localStorage.getItem('inactive')){
+        this.inactiveEmployees = this.getInactiveEmployees();
+      }else{
+        this.inactiveEmployees = employees;
+      }
+      
       this.loaded = true;
-      //get localStorage
-      this.getEmployees();
     });
   }
   // save inactive employees to locaStorage
-  storeEmployees(employees) {
-    localStorage.setItem('inactive', JSON.stringify(employees));
+  storeEmployees(employees: Employee[]) {
+    this.workService.StoreInactives(employees);
   }
   //get inactive from Localstorage
-  getEmployees() {
-    if (localStorage.getItem('inactive')) {
-      this.employees = JSON.parse(localStorage.getItem('inactive'));
-    }
+  getInactiveEmployees() {
+    return this.workService.getInactive()
+  }
+  getActives(){
+    this.active = this.workService.getActives();
   }
 
   //Set Active employees
   setActive(e, employee) {
     e.preventDefault();
-    //set inactive employees
-    this.getEmployees();
 
-    this.employees.forEach((emp, index) => {
+    this.inactiveEmployees.forEach((emp, index) => {
       if (emp.id === employee.id) {
-        this.employees.splice(index, 1);
+        this.inactiveEmployees.splice(index, 1);
       }
     });
 
     //save inactive employees changes
-    this.storeEmployees(this.employees);
+    this.storeEmployees(this.inactiveEmployees);
+
     // get inactive employees due to changes
-    this.getEmployees();
+    this.inactiveEmployees = this.getInactiveEmployees();
 
     // new active employee
     let active: Work;
@@ -83,25 +87,15 @@ export class DashboardComponent implements OnInit {
     //get Actives
     this.getActives()
   }
-  getActives(){
-    this.active = this.workService.getActives();
-  }
+  
  
 
 
 
   done(e, active) {
     e.preventDefault();
-    this.workService.done(active).subscribe(
-      res => {
-        if (res.employee) {
-          this.getActives();
-          //Success message
-        } else {
-          //Fail message
-        }
-      }
-    )
+    this.workService.done(active);
+    this.getActives();
   }
 
 }

@@ -3,13 +3,13 @@
     <div class="col s12 m6">
       <div class="card" *ngIf="loaded">
         <div class="card-content">
-          <span class="card-title" *ngIf="employees === null || employees.length === 0">
+          <span class="card-title" *ngIf="inactiveEmployees === null || inactiveEmployees.length === 0">
             <h4>No Inactive Employees</h4>
           </span>
-          <span class="card-title" *ngIf="employees.length > 0">
+          <span class="card-title" *ngIf="inactiveEmployees.length > 0">
             <h4>Inactive Employees</h4>
           </span>
-          <ul class="collection with-header" *ngFor="let employee of employees">
+          <ul class="collection with-header" *ngFor="let employee of inactiveEmployees">
             <li class="collection-header">
               <h4>{{employee.FirstName}} {{employee.LastName}}</h4>
             </li>

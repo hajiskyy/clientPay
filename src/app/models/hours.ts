@@ -1,6 +1,6 @@
 export interface Hours{
   employee: string,
-  date:  Date,
-  startTime: Date,
-  endTime: Date,
+  date:  any,
+  startTime: any,
+  endTime: any,
 }

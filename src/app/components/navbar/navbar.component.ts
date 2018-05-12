@@ -15,4 +15,11 @@ export class NavbarComponent implements OnInit {
     M.Sidenav.init(sideNav, {});
 
   }
+  logOut(e){
+    e.preventDefault();
+    if(confirm("logging out will reset the active employees for a new day, Are you sure?")){
+      localStorage.clear();
+    }
+    
+  }
 }
