@@ -6,7 +6,7 @@ import { FormsModule } from "@angular/forms";
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from "angularfire2/firestore";
 import { AngularFireAuthModule, AngularFireAuthProvider } from "angularfire2/auth";
-import { environment } from '../environments/environment';
+import { environment } from '../environments/environment.prod';
 
 
 import { AppComponent } from './app.component';

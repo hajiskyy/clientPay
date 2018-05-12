@@ -2,21 +2,21 @@
   <nav class="blue">
     <div class="container">
       <div class="nav-wrapper">
-        <a href="#" class="brand-logo">Client Pay</a>
+        <a routerLink="/dashboard" class="brand-logo">Client Pay</a>
         <a href="#" data-target="mobile-nav" class="sidenav-trigger">
           <i class="material-icons">menu</i>
         </a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-          <li>
+          <li *ngIf="auth.authenticated">
             <a routerLink="/dashboard" routerLinkActive="active-link"[routerLinkActiveOptions]="{exact:
               true}">Dashboard</a>
           </li>
-          <li>
+          <li *ngIf="auth.authenticated">
             <a routerLink="/employees" 
             routerLinkActive="active-link"[routerLinkActiveOptions]="{exact:
               true}">Employees</a>
           </li>
-          <li>
+          <li *ngIf="auth.authenticated">
             <a href="#" (click)="logOut($event)">Log out</a>
           </li>
         </ul>
@@ -25,13 +25,13 @@
   </nav>
 </div>
 <ul class="sidenav light-blue lighten-5" id="mobile-nav">
-    <li>
+    <li *ngIf="auth.authenticated">
       <a class="sidenav-close" routerLink="/dashboard">Dashboard</a>
     </li>
-    <li>
+    <li *ngIf="auth.authenticated">
       <a class="sidenav-close" routerLink="/employees">Employees</a>
     </li>
-    <li>
+    <li *ngIf="auth.authenticated">
       <a class="sidenav-close" href="#" (click)="logOut($event)">Log out</a>
     </li>
   </ul>
