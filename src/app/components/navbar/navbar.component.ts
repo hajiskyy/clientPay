@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 export class NavbarComponent implements OnInit {
   toastHTML: string;
   constructor(
-    private auth: AuthServiceService,
+    public auth: AuthServiceService,
     private router: Router
   ) { }
 
