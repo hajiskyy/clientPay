@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
   email: string;
   password: string;
   toastHTML: string;
+  loaded: boolean;
   constructor(
     private companyService: CompanyService,
     private auth: AuthServiceService,
@@ -22,6 +23,7 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.loaded = true
   }
   emailVerification(email: string) {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -30,12 +32,18 @@ export class LoginComponent implements OnInit {
 
   onLogin(){
     if(this.emailVerification(this.email)){
+      this.loaded = false;
       this.auth.login(this.email, this.password)
         .then(res => {
+          this.loaded = true;
+          localStorage.setItem('email',res.user.email);
+          this.companyService.getCompanybyEmail(res.user.email).subscribe(company => {
+            localStorage.setItem('company', company[0].name);
+          })
           this.router.navigate(['/dashboard']);
-        
         })
         .catch(err => {
+          this.loaded = true;          
           this.toastHTML = err.message;
           M.toast({ html: this.toastHTML, displayLength: 2000 });
         })

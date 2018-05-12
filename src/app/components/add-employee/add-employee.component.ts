@@ -16,6 +16,7 @@ export class AddEmployeeComponent implements OnInit {
   role: string;
   salary: number;
   id: string;
+  company: string;
   employee: Employee;
   loaded: boolean;
   isNew: boolean;
@@ -27,6 +28,7 @@ export class AddEmployeeComponent implements OnInit {
   ngOnInit() {
     this.loaded = true;
     this.isNew = true
+    this.company = localStorage.getItem('company');
     //subscribe to the selected employee Observable
     this.employeeService.selectedEmployee.subscribe(employee => {
       if (employee.id !== null) {
@@ -35,6 +37,7 @@ export class AddEmployeeComponent implements OnInit {
         this.FirstName = employee.FirstName;
         this.LastName = employee.LastName;
         this.department = employee.department;
+        this.company = employee.company
         this.role = employee.role;
         this.salary = employee.salary;
 
@@ -86,6 +89,7 @@ export class AddEmployeeComponent implements OnInit {
                     FirstName: this.FirstName,
                     LastName: this.LastName,
                     department: this.department,
+                    company: this.company,
                     role: this.role,
                     salary: this.salary
                   }
@@ -99,6 +103,7 @@ export class AddEmployeeComponent implements OnInit {
                     FirstName: this.FirstName,
                     LastName: this.LastName,
                     department: this.department,
+                    company: this.company,
                     role: this.role,
                     salary: this.salary
                   }

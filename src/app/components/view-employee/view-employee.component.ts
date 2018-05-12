@@ -58,11 +58,11 @@ export class ViewEmployeeComponent implements OnInit {
   }
 
   onDelete() {
-    this.employeeService.deleteEmployee(this.employee.id);
     this.workService.deleteWorkLog(this.employee.id);
+    this.employeeService.deleteEmployee(this.employee.id);
     let toastHTML = '<span>Employee deleted</span>';
     M.toast({ html: toastHTML, displayLength: 2000 });
-    this.router.navigate(['/employees'])
+    this.router.navigate(['/employees']);
   }
 
   getHoursMonth(worked_hours: Hours[]) {

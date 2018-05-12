@@ -5,6 +5,7 @@ import { CompanyService } from "../../services/company.service";
 import { AuthServiceService } from "../../services/auth-service.service";
 import * as M from "materialize-css/dist/js/materialize";
 import { Router } from "@angular/router";
+import { Company } from '../../models/company';
 
 @Component({
   selector: 'app-register',
@@ -16,6 +17,7 @@ export class RegisterComponent implements OnInit {
   password: string;
   companyName: string;
   toastHTML: string;
+  loaded: boolean
 
   constructor(
     private companyService: CompanyService,
@@ -24,6 +26,7 @@ export class RegisterComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.loaded = true;
 
   }
 
@@ -51,13 +54,22 @@ export class RegisterComponent implements OnInit {
             this.toastHTML = '<span>Company name already exists</span>';
             M.toast({ html: this.toastHTML, displayLength: 2000 });
           } else {
+            this.loaded = false;
             this.auth.register(this.email, this.password)
               .then(res => {
                 if(res){
+                  this.loaded = true;
+                  let newCompany:Company;
+                  newCompany = {
+                    name: this.companyName,
+                    email: res.user.email
+                  }
+                  this.companyService.addCompany(newCompany);
                   this.router.navigate(["/login"]);
                 }
               })
               .catch(err => {
+                this.loaded = true;
                 this.toastHTML = err.message;
                 M.toast({ html: this.toastHTML, displayLength: 2000 });
               });

@@ -55,7 +55,6 @@ export class DashboardComponent implements OnInit {
   //Set Active employees
   setActive(e, employee) {
     e.preventDefault();
-
     this.inactiveEmployees.forEach((emp, index) => {
       if (emp.id === employee.id) {
         this.inactiveEmployees.splice(index, 1);

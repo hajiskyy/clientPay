@@ -92,7 +92,9 @@ export class WorkService {
   }
 
   deleteWorkLog(id: string){
-    this.hours_workedCollection = this.db.collection('hours_worked', ref => ref.where('employee', '==',`${id}`));
+
+    //cant seem to delete a collection
+    this.hours_workedCollection = this.db.collection('hours_worked', ref => ref.where('employee', '==',`${id}`))
     this.hours_workedCollection.doc('hours_worked').delete();
   }
 

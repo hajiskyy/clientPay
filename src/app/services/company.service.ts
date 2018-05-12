@@ -21,6 +21,15 @@ export class CompanyService {
     return this.company;
   }
 
+  getCompanybyEmail(email: string){
+    this.companyCol = this.db.collection('company', ref => {
+      return ref.where("email", "==", email).limit(1);
+    });
+    this.company = this.companyCol.valueChanges()
+    return this.company;
+
+  }
+
   addCompany(newCompany: Company){
     this.companyCol.add(newCompany)
   }

@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from "angularfire2/auth";
+import { Observable } from "rxjs";
 import  * as firebase from "firebase/app";
 
 @Injectable()
 export class AuthServiceService {
   authState: any;
+  user: Observable<any>;
   constructor(public auth: AngularFireAuth) {
     auth.authState.subscribe(auth => {
       this.authState = auth;
@@ -26,9 +28,9 @@ export class AuthServiceService {
     return this.auth.auth.signInAndRetrieveDataWithEmailAndPassword(email, password);
   }
 
-  getUser(){
-    return this.authenticated ? this.auth.auth.currentUser: null;
-  }
+  // getUser(){
+  //   return this.authenticated ? this.auth.auth.currentUser: null;
+  // }
 
   logOut(){
     return this.auth.auth.signOut()

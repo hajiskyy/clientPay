@@ -6,6 +6,8 @@ import {Observable} from 'rxjs';
 import 'rxjs/add/operator/map';
 import { Employee } from "../models/employee";
 import { WorkService } from "./work.service";
+import { CompanyService } from './company.service';
+import { AuthServiceService } from './auth-service.service';
 
 
 @Injectable()
@@ -14,6 +16,7 @@ export class EmployeeService {
   employee: Observable<Employee>
   employeeCollection: AngularFirestoreCollection<Employee>;
   employeeDocument: AngularFirestoreDocument<Employee>
+  companyName: string
 
   private employeeSource = new BehaviorSubject<Employee>({
     id: null,
@@ -27,13 +30,18 @@ export class EmployeeService {
 
   constructor(
     public db: AngularFirestore,
-    private workService: WorkService
-  ) { 
-    // this.employeeCollection = this.db.collection('employee');
+    private workService: WorkService,
+    private companyServe: CompanyService,
+    private auth: AuthServiceService
+  ) {
+    this.companyName = localStorage.getItem('company');
+
+      this.employeeCollection = this.db.collection('employee', ref => ref.where('company', '==', this.companyName).orderBy('salary', 'desc'));
+    
 }
 
   getEmployees(){
-    this.employeeCollection = this.db.collection('employee', ref => ref.orderBy('salary', 'desc'));
+    // this.employeeCollection = this.db.collection('employee', ref => ref.orderBy('salary', 'desc'));
     this.employees = this.employeeCollection.snapshotChanges().map(changes => {
       return changes.map(a => {
         const data = a.payload.doc.data() as Employee;
@@ -45,7 +53,7 @@ export class EmployeeService {
   }
 
   getEmployeeById(id: string){
-    this.employeeDocument = this.db.doc<Employee>(`employee/${id}`);
+    this.employeeDocument = this.db.doc<Employee>(`employee/${id}`,);
     this.employee = this.employeeDocument.snapshotChanges().map(changes => {
       
       let data = changes.payload.data() as Employee;
@@ -57,7 +65,7 @@ export class EmployeeService {
 
   addEmployee(employee: Employee){
     this.workService.addInactive(employee);
-    this.employeeCollection = this.db.collection('employee');
+    // this.employeeCollection = this.db.collection('employee');
      this.employeeCollection.add(employee);
   }
 
