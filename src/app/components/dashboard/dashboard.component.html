@@ -3,6 +3,7 @@
     <div class="col s12 m6">
       <div class="card" *ngIf="loaded">
         <div class="card-content">
+          <a (click)="reset()" (mouseover)="onHover()" class="btn red lighten-3 tooltipped" data-position="right" data-tooltip="New day?">Reset</a>
           <span class="card-title" *ngIf="inactiveEmployees === null || inactiveEmployees.length === 0">
             <h4>No Inactive Employees</h4>
           </span>

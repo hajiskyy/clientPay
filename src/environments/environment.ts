@@ -6,11 +6,11 @@
 export const environment = {
   production: false,
   firebaseApp: {
-    apiKey: "*************************",
+    apiKey: "AIzaSyDIc6gHgYMTnJ_ISOvTcfJVFMibi8FHrBE",
     authDomain: "clientpanel-d9885.firebaseapp.com",
     databaseURL: "https://clientpanel-d9885.firebaseio.com",
-    projectId: "***********",
+    projectId: "clientpanel-d9885",
     storageBucket: "",
-    messagingSenderId: "*********"
+    messagingSenderId: "239081843102"
   }
 };

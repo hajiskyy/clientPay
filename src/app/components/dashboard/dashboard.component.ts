@@ -4,6 +4,7 @@ import { Work } from "../../models/work";
 import { Hours } from "../../models/hours";
 import { EmployeeService } from "../../services/employee.service";
 import { WorkService } from "../../services/work.service";
+import * as M from "materialize-css/dist/js/materialize";
 
 @Component({
   selector: 'app-dashboard',
@@ -87,15 +88,21 @@ export class DashboardComponent implements OnInit {
     //get Actives
     this.getActives()
   }
-  
- 
-
-
-
   done(e, active) {
     e.preventDefault();
     this.workService.done(active);
     this.getActives();
+  }
+
+  onHover(){
+    let elems = document.querySelectorAll('.tooltipped');
+    M.Tooltip.init(elems, {});
+  }
+
+  reset(){
+    localStorage.removeItem('inactive');
+    localStorage.removeItem('active');
+    window.location.reload();
   }
 
 }
