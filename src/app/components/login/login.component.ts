@@ -36,11 +36,12 @@ export class LoginComponent implements OnInit {
       this.auth.login(this.email, this.password)
         .then(res => {
           this.loaded = true;
+          this.auth.sendVerfifcationEmail();
           localStorage.setItem('email',res.user.email);
           this.companyService.getCompanybyEmail(res.user.email).subscribe(company => {
             localStorage.setItem('company', company[0].name);
+            this.router.navigate(['/dashboard']);
           })
-          this.router.navigate(['/dashboard']);
         })
         .catch(err => {
           this.loaded = true;          

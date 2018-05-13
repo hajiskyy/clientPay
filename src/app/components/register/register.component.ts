@@ -45,7 +45,7 @@ export class RegisterComponent implements OnInit {
 
   }
 
-  onRegister(){
+  onRegister() {
     if (this.emailVerification(this.email)) {
       if (this.company(this.companyName)) {
         this.companyService.getCompany(this.companyName).subscribe(company => {
@@ -57,9 +57,17 @@ export class RegisterComponent implements OnInit {
             this.loaded = false;
             this.auth.register(this.email, this.password)
               .then(res => {
-                if(res){
+                if (res) {
+                  this.auth.sendVerfifcationEmail().then(res => {
+                    this.toastHTML = '<span>Email verification Sent</span>';
+                    M.toast({ html: this.toastHTML, displayLength: 2000 });
+                  })
+                    .catch(err => {
+                      this.toastHTML = '<span>Could not send verification Email</span>';
+                      M.toast({ html: this.toastHTML, displayLength: 2000 });
+                    })
                   this.loaded = true;
-                  let newCompany:Company;
+                  let newCompany: Company;
                   newCompany = {
                     name: this.companyName,
                     email: res.user.email

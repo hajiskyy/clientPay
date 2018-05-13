@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from "angularfire2/auth";
 import { Observable } from "rxjs";
-import  * as firebase from "firebase/app";
+import * as firebase from "firebase/app";
 
 @Injectable()
 export class AuthServiceService {
@@ -18,13 +18,21 @@ export class AuthServiceService {
     //     this.authState = false;
     //   }
     // })
-   }
+  }
 
-  register(email: string, password: string){
+  register(email: string, password: string) {
     return this.auth.auth.createUserAndRetrieveDataWithEmailAndPassword(email, password);
   }
 
-  login(email: string, password: string){
+  sendVerfifcationEmail(){
+    let user = this.auth.auth.currentUser;
+    if(!user.emailVerified){
+      return user.sendEmailVerification()
+    }
+  }
+  
+
+  login(email: string, password: string) {
     return this.auth.auth.signInAndRetrieveDataWithEmailAndPassword(email, password);
   }
 
@@ -32,12 +40,12 @@ export class AuthServiceService {
   //   return this.authenticated ? this.auth.auth.currentUser: null;
   // }
 
-  logOut(){
+  logOut() {
     return this.auth.auth.signOut()
   }
 
   //returns true if user is logged in
-  get authenticated(): boolean{
+  get authenticated(): boolean {
     return this.authState !== null;
   }
 
