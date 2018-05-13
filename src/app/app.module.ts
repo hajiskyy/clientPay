@@ -31,7 +31,7 @@ const appRoutes: Routes = [
   {path: 'register', component: RegisterComponent},
   {path: 'add', component: AddEmployeeComponent, canActivate: [GuardGuard] },
   {path:'', redirectTo:'/dashboard', pathMatch: 'full'},
-  {path: '**', redirectTo:'/dashboard'}
+  {path: '**', redirectTo:'/login'}
 ];
 
 @NgModule({
